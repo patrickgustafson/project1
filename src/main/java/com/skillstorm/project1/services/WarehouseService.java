@@ -16,4 +16,11 @@ public class WarehouseService {
         warehouses.add(new Warehouse(1, "Los Angeles", 100));
         return warehouses;
     }
+
+    public List<Warehouse> findWarehousesByLocation(String location) {
+        List<Warehouse> warehouses = new LinkedList<>();
+        warehouses.add(new Warehouse(0, location, 100));
+        warehouses.add(new Warehouse(1, location, 100));
+        return warehouses;
+    }
 }

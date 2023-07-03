@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstorm.project1.models.Warehouse;
@@ -26,5 +27,9 @@ public class WarehouseController {
     public List<Warehouse> findAllWarehouses() {
         return service.findAllWarehouses();
     }
-    
+
+    @GetMapping("/location")
+    public List<Warehouse> findByLocation(@RequestParam String location) {
+        return service.findWarehousesByLocation(location);
+    }  
 }
