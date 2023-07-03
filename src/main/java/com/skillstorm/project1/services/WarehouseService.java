@@ -27,4 +27,18 @@ public class WarehouseService {
     public Warehouse findById(int id) {
         return new Warehouse(id, "New York", 50);
     }
+
+    public Warehouse createWarehouse(Warehouse warehouse) {
+        warehouse.setId(1);
+        return warehouse;
+    }
+
+    public Warehouse updateWarehouse(int id, Warehouse warehouse) {
+        warehouse.setId(id);
+        return warehouse;
+    }
+
+    public Warehouse deleteWarehouse(int id, Warehouse warehouse) {
+        return warehouse;
+    }
 }
