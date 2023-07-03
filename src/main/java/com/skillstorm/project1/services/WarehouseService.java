@@ -23,4 +23,8 @@ public class WarehouseService {
         warehouses.add(new Warehouse(1, location, 100));
         return warehouses;
     }
+
+    public Warehouse findById(int id) {
+        return new Warehouse(id, "New York", 50);
+    }
 }
