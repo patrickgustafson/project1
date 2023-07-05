@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +23,7 @@ public class Item {
     @Column(name = "units_per_item")
     private int unitsPerItem;
 
+    @ManyToOne
     private Warehouse warehouse;
 
     public Item(int id, String name, int unitsPerItem) {

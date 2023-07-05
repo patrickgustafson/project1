@@ -1,13 +1,14 @@
 package com.skillstorm.project1.models;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "warehouses")
@@ -24,7 +25,8 @@ public class Warehouse {
     @Column
     private int capactity;
 
-    private List<Item> items;
+    @OneToMany(targetEntity = Item.class, mappedBy = "warehouse")
+    private Set<Item> items;
 
     public Warehouse(int id, String location, int capactity) {
         this.id = id;
