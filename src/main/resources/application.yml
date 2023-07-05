@@ -1,1 +1,9 @@
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/project1
+        username: postgres
+        password: password
+
+server:
+    port: 8282
 
