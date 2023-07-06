@@ -26,6 +26,8 @@ public class Item {
     @ManyToOne
     private Warehouse warehouse;
 
+    public Item() {}
+
     public Item(int id, String name, int unitsPerItem) {
         this.id = id;
         this.name = name;

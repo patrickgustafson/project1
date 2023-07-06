@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.Set;
 
 @Entity
@@ -23,20 +25,23 @@ public class Warehouse {
     private String location;
 
     @Column
-    private int capactity;
+    private int capacity;
 
+    @JsonBackReference
     @OneToMany(targetEntity = Item.class, mappedBy = "warehouse")
     private Set<Item> items;
 
-    public Warehouse(int id, String location, int capactity) {
+    public Warehouse() {}
+
+    public Warehouse(int id, String location, int capacity) {
         this.id = id;
         this.location = location;
-        this.capactity = capactity;
+        this.capacity = capacity;
     }
 
-    public Warehouse(String location, int capactity) {
+    public Warehouse(String location, int capacity) {
         this.location = location;
-        this.capactity = capactity;
+        this.capacity = capacity;
     }
 
     public int getId() {
@@ -51,11 +56,11 @@ public class Warehouse {
     public void setLocation(String location) {
         this.location = location;
     }
-    public int getCapactity() {
-        return capactity;
+    public int getCapacity() {
+        return capacity;
     }
-    public void setCapactity(int capactity) {
-        this.capactity = capactity;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     @Override
@@ -64,7 +69,7 @@ public class Warehouse {
         int result = 1;
         result = prime * result + id;
         result = prime * result + ((location == null) ? 0 : location.hashCode());
-        result = prime * result + capactity;
+        result = prime * result + capacity;
         return result;
     }
 
@@ -84,13 +89,13 @@ public class Warehouse {
                 return false;
         } else if (!location.equals(other.location))
             return false;
-        if (capactity != other.capactity)
+        if (capacity != other.capacity)
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Warehouse [id=" + id + ", location=" + location + ", capactity=" + capactity + "]";
+        return "Warehouse [id=" + id + ", location=" + location + ", capacity=" + capacity + "]";
     } 
 }

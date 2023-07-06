@@ -26,6 +26,8 @@ public class Stock {
     @Column
     private int quantity;
 
+    public Stock() {}
+
     public Stock(int id, int item_id, int warehouse_id, int quantity) {
         this.id = id;
         this.item_id = item_id;
