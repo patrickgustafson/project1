@@ -16,5 +16,9 @@ public class ItemService {
 
     public List<Item> findAllItems() {
         return repository.findAll();
-    } 
+    }
+
+    public Item saveItem(Item item) {
+        return repository.save(item);
+    }
 }

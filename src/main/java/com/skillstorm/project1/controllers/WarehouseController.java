@@ -2,6 +2,8 @@ package com.skillstorm.project1.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +34,7 @@ public class WarehouseController {
     }
 
     @PostMapping("/warehouse")
-    public ResponseEntity<Warehouse> createWarehouse(@RequestBody Warehouse warehouse) {
+    public ResponseEntity<Warehouse> createWarehouse(@Valid @RequestBody Warehouse warehouse) {
         Warehouse createdWarehouse = service.saveWarehouse(warehouse);
         return new ResponseEntity<Warehouse>(createdWarehouse, HttpStatus.CREATED);
     }
