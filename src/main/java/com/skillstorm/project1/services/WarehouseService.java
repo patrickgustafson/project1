@@ -23,7 +23,7 @@ public class WarehouseService {
     }
 
     public int updateCapacity(Warehouse warehouse, int newCapacity) {
-         return repository.updateWarehouseCapacity(warehouse.getId(), newCapacity);
+         return repository.updateWarehouseCapacity(warehouse.getWarehouseId(), newCapacity);
     }
 
     public void deleteWarehouse(int id) {

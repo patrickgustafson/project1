@@ -17,9 +17,9 @@ import java.util.List;
 public class Warehouse {
 
     @Id
-    @Column
+    @Column(name = "warehouse_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int warehouseId;
 
     @Column
     private String location;
@@ -34,7 +34,7 @@ public class Warehouse {
     public Warehouse() {}
 
     public Warehouse(int id, String location, int capacity) {
-        this.id = id;
+        this.warehouseId = id;
         this.location = location;
         this.capacity = capacity;
     }
@@ -44,11 +44,11 @@ public class Warehouse {
         this.capacity = capacity;
     }
 
-    public int getId() {
-        return id;
+    public int getWarehouseId() {
+        return warehouseId;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setWarehouseId(int id) {
+        this.warehouseId = id;
     }
     public String getLocation() {
         return location;
@@ -67,7 +67,7 @@ public class Warehouse {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
+        result = prime * result + warehouseId;
         result = prime * result + ((location == null) ? 0 : location.hashCode());
         result = prime * result + capacity;
         return result;
@@ -82,7 +82,7 @@ public class Warehouse {
         if (getClass() != obj.getClass())
             return false;
         Warehouse other = (Warehouse) obj;
-        if (id != other.id)
+        if (warehouseId != other.warehouseId)
             return false;
         if (location == null) {
             if (other.location != null)
@@ -96,6 +96,6 @@ public class Warehouse {
 
     @Override
     public String toString() {
-        return "Warehouse [id=" + id + ", location=" + location + ", capacity=" + capacity + "]";
+        return "Warehouse [id=" + warehouseId + ", location=" + location + ", capacity=" + capacity + "]";
     } 
 }

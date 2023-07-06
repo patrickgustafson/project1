@@ -12,6 +12,6 @@ public class WarehouseMapper {
     }
 
     public WarehouseDto toDto(Warehouse warehouse) {
-        return new WarehouseDto(warehouse.getId(), warehouse.getLocation(), warehouse.getCapacity());
+        return new WarehouseDto(warehouse.getWarehouseId(), warehouse.getLocation(), warehouse.getCapacity());
     }
 }

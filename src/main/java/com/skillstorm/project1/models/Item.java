@@ -17,15 +17,15 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Item {
 
     @Id
-    @Column
+    @Column(name = "item_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int itemId;
 
     @Column
     private String name;
 
-    @Column(name = "units_per_item")
-    private int unitsPerItem;
+    @Column
+    private int units;
 
     @JsonBackReference
     @OneToMany(targetEntity = Stock.class, mappedBy = "item")
@@ -34,22 +34,22 @@ public class Item {
     public Item() {}
 
     public Item(int id, String name, int unitsPerItem) {
-        this.id = id;
+        this.itemId = id;
         this.name = name;
-        this.unitsPerItem = unitsPerItem;
+        this.units = unitsPerItem;
     }
 
     public Item(String name, int unitsPerItem) {
         this.name = name;
-        this.unitsPerItem = unitsPerItem;
+        this.units = unitsPerItem;
     }
 
-    public int getId() {
-        return id;
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setItemId(int id) {
+        this.itemId = id;
     }
 
     public String getName() {
@@ -60,21 +60,21 @@ public class Item {
         this.name = name;
     }
 
-    public int getUnitsPerItem() {
-        return unitsPerItem;
+    public int getUnits() {
+        return units;
     }
 
-    public void setUnitsPerItem(int unitsPerItem) {
-        this.unitsPerItem = unitsPerItem;
+    public void setUnits(int unitsPerItem) {
+        this.units = unitsPerItem;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
+        result = prime * result + itemId;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + unitsPerItem;
+        result = prime * result + units;
         return result;
     }
 
@@ -87,20 +87,20 @@ public class Item {
         if (getClass() != obj.getClass())
             return false;
         Item other = (Item) obj;
-        if (id != other.id)
+        if (itemId != other.itemId)
             return false;
         if (name == null) {
             if (other.name != null)
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        if (unitsPerItem != other.unitsPerItem)
+        if (units != other.units)
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Item [id=" + id + ", name=" + name + ", unitsPerItem=" + unitsPerItem + "]";
+        return "Item [id=" + itemId + ", name=" + name + ", unitsPerItem=" + units + "]";
     }
 }
