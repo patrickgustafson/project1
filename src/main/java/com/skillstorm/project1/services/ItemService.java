@@ -43,8 +43,11 @@ public class ItemService {
         if (newName != null) {
             existingItem.setName(newName);
         }
-        if (newUnits != 0) {
+        if (newUnits >= 0) {
             existingItem.setUnits(newUnits);
+        }
+        else {
+            throw new IllegalArgumentException("Units must be 0 or more");
         }
         repository.save(existingItem);
         return 1;
