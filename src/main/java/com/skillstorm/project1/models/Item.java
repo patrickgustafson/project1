@@ -1,12 +1,16 @@
 package com.skillstorm.project1.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "items")
@@ -23,8 +27,9 @@ public class Item {
     @Column(name = "units_per_item")
     private int unitsPerItem;
 
-    @ManyToOne
-    private Warehouse warehouse;
+    @JsonBackReference
+    @OneToMany(targetEntity = Stock.class, mappedBy = "item")
+    private List<Stock> stock;
 
     public Item() {}
 

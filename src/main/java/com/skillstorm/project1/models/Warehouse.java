@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "warehouses")
@@ -28,8 +28,8 @@ public class Warehouse {
     private int capacity;
 
     @JsonBackReference
-    @OneToMany(targetEntity = Item.class, mappedBy = "warehouse")
-    private Set<Item> items;
+    @OneToMany(targetEntity = Stock.class, mappedBy = "warehouse")
+    private List<Stock> stock;
 
     public Warehouse() {}
 

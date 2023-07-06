@@ -1,68 +1,60 @@
 package com.skillstorm.project1.models;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "stock")
 public class Stock {
 
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @EmbeddedId
+    private StockId id;
 
-    @JoinColumn
-    private int item_id;
+    @ManyToOne
+    @JoinColumn(name = "item_id", referencedColumnName = "item_id", insertable = false, updatable = false)
+    private Item item;
 
-    @JoinColumn
-    private int warehouse_id;
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id", referencedColumnName = "warehouse_id", insertable = false, updatable = false)
+    private Warehouse warehouse;
 
     @Column
     private int quantity;
 
     public Stock() {}
 
-    public Stock(int id, int item_id, int warehouse_id, int quantity) {
-        this.id = id;
-        this.item_id = item_id;
-        this.warehouse_id = warehouse_id;
+    public Stock(Item item, Warehouse warehouse, int quantity) {
+        this.item = item;
+        this.warehouse = warehouse;
         this.quantity = quantity;
     }
 
-    public Stock(int item_id, int warehouse_id, int quantity) {
-        this.item_id = item_id;
-        this.warehouse_id = warehouse_id;
-        this.quantity = quantity;
-    }
-
-    public int getId() {
+    public StockId getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(StockId id) {
         this.id = id;
     }
 
-    public int getItem_id() {
-        return item_id;
+    public Item getItem() {
+        return item;
     }
 
-    public void setItem_id(int item_id) {
-        this.item_id = item_id;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
-    public int getWarehouse_id() {
-        return warehouse_id;
+    public Warehouse getWarehouse() {
+        return warehouse;
     }
 
-    public void setWarehouse_id(int warehouse_id) {
-        this.warehouse_id = warehouse_id;
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
     }
 
     public int getQuantity() {
@@ -77,9 +69,9 @@ public class Stock {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
-        result = prime * result + item_id;
-        result = prime * result + warehouse_id;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((item == null) ? 0 : item.hashCode());
+        result = prime * result + ((warehouse == null) ? 0 : warehouse.hashCode());
         result = prime * result + quantity;
         return result;
     }
@@ -93,11 +85,20 @@ public class Stock {
         if (getClass() != obj.getClass())
             return false;
         Stock other = (Stock) obj;
-        if (id != other.id)
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
             return false;
-        if (item_id != other.item_id)
+        if (item == null) {
+            if (other.item != null)
+                return false;
+        } else if (!item.equals(other.item))
             return false;
-        if (warehouse_id != other.warehouse_id)
+        if (warehouse == null) {
+            if (other.warehouse != null)
+                return false;
+        } else if (!warehouse.equals(other.warehouse))
             return false;
         if (quantity != other.quantity)
             return false;
@@ -106,10 +107,6 @@ public class Stock {
 
     @Override
     public String toString() {
-        return "Stock [id=" + id + ", item_id=" + item_id + ", warehouse_id=" + warehouse_id + ", quantity=" + quantity
-                + "]";
+        return "Stock [id=" + id + ", item=" + item + ", warehouse=" + warehouse + ", quantity=" + quantity + "]";
     }
-
-    
-    
 }
