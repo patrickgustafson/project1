@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,11 @@ public class ItemService {
     ItemRepository repository;
 
     public List<Item> findAllItems() {
-        return repository.findAll();
+        try {
+            return repository.findAll();
+        } catch (Exception e) {
+            throw new EntityNotFoundException("There are no items");
+        }
     }
 
     public Item findItemById(int id) {
@@ -28,6 +33,11 @@ public class ItemService {
     }
 
     public Item saveItem(Item item) {
+        Optional<Item> itemOption = repository.findById(item.getItemId());
+
+        if (itemOption.isPresent()) {
+            throw new DuplicateKeyException("Item with id: " + item.getItemId() + " already exists");
+        }
         return repository.save(item);
     }
 
@@ -53,12 +63,7 @@ public class ItemService {
         return 1;
     }
 
-    public Item deleteItem(Item item) {
-        Optional<Item> itemOption = repository.findById(item.getItemId());
-        if (!itemOption.isPresent()) {
-            throw new EntityNotFoundException("Item with id: " + item.getItemId() + " does not exist");
-        }
+    public void deleteItem(Item item) {
         repository.delete(item);
-        return item;
     }
 }

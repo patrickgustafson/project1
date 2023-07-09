@@ -55,7 +55,7 @@ public class ItemController {
 
     @DeleteMapping("/item/{id}")
     public ResponseEntity<Item> deleteItem(@RequestBody Item item) {
-        Item deletedItem = service.deleteItem(item);
-        return new ResponseEntity<Item>(deletedItem, HttpStatus.OK);
+        service.deleteItem(item);
+        return ResponseEntity.noContent().build();
     }
 }
