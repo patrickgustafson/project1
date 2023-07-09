@@ -8,6 +8,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,14 +25,28 @@ public class WarehouseService {
     private EntityManager EntityManager;
     
     public List<Warehouse> findAllWarehouses() {
-        return repository.findAll();
+        try {
+            return repository.findAll();
+        } catch (Exception e) {
+            throw new EntityNotFoundException("There are no warehouses");
+        }
+
     }
 
     public Warehouse findWarehouseById(int id) {
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Warehouse with id: " + id + "does not exist"));
+        Optional<Warehouse> warehouseOption = repository.findById(id);
+
+        if (!warehouseOption.isPresent()) {
+            throw new EntityNotFoundException("Warehouse with ID: " + id + " does not exist");
+        }
+        return warehouseOption.get();
     }
 
     public Warehouse saveWarehouse(Warehouse warehouse) {
+        Optional<Warehouse> warehouseOption = repository.findById(warehouse.getWarehouseId());
+        if (warehouseOption.isPresent()) {
+            throw new DuplicateKeyException("Warehouse with ID: " + warehouse.getWarehouseId() + " already exists");
+        }
         return repository.save(warehouse);
     }
 
@@ -57,12 +72,17 @@ public class WarehouseService {
         return 1;
     }
 
-    public Warehouse deleteWarehouse(Warehouse warehouse) {
+    public void deleteWarehouse(Warehouse warehouse) {
         Optional<Warehouse> warehouseOption = repository.findById(warehouse.getWarehouseId());
         if (!warehouseOption.isPresent()) {
             throw new EntityNotFoundException("Warehouse with id: " + warehouse.getWarehouseId() + " does not exist");
         }
         repository.delete(warehouse);
-        return warehouse;
+    }
+
+    @Transactional
+    public void updateCapacity(Warehouse warehouse, int newCapacity) {
+        warehouse.setCapacity(newCapacity);
+        EntityManager.merge(warehouse);
     }
 }

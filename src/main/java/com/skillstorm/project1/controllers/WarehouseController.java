@@ -54,7 +54,7 @@ public class WarehouseController {
 
     @DeleteMapping("/warehouse/{id}")
     public ResponseEntity<Warehouse> deleteWarehouse(@RequestBody Warehouse warehouse) {
-        Warehouse deletedWarehouse = service.deleteWarehouse(warehouse);
-        return new ResponseEntity<Warehouse>(deletedWarehouse, HttpStatus.NO_CONTENT);
+        service.deleteWarehouse(warehouse);
+        return ResponseEntity.noContent().build();
     }
 }
