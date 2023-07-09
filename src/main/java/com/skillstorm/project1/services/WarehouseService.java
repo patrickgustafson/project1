@@ -37,7 +37,7 @@ public class WarehouseService {
         Optional<Warehouse> warehouseOption = repository.findById(id);
 
         if (!warehouseOption.isPresent()) {
-            throw new EntityNotFoundException("Warehouse with ID: " + id + " does not exist");
+            throw new EntityNotFoundException("Warehouse with id: " + id + " does not exist");
         }
         return warehouseOption.get();
     }
@@ -45,7 +45,7 @@ public class WarehouseService {
     public Warehouse saveWarehouse(Warehouse warehouse) {
         Optional<Warehouse> warehouseOption = repository.findById(warehouse.getWarehouseId());
         if (warehouseOption.isPresent()) {
-            throw new DuplicateKeyException("Warehouse with ID: " + warehouse.getWarehouseId() + " already exists");
+            throw new DuplicateKeyException("Warehouse with id: " + warehouse.getWarehouseId() + " already exists");
         }
         return repository.save(warehouse);
     }
