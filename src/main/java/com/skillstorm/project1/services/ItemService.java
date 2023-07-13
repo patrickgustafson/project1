@@ -20,6 +20,9 @@ public class ItemService {
     @Autowired
     ItemRepository repository;
 
+    @Autowired
+    WarehouseService warehouseService;
+
     public List<Item> findAllItems() {
         try {
             return repository.findAll();

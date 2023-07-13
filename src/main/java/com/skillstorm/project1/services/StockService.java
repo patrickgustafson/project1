@@ -95,27 +95,6 @@ public class StockService {
     }
 
     @Transactional
-    public int deleteStock(int itemId, int warehouseId) {
-        Optional<Stock> stockOption = repository.findById(findStockByIds(itemId, warehouseId).getId());
-        if (!stockOption.isPresent()) {
-            throw new EntityNotFoundException("Stock with id: " + findStockByIds(itemId, warehouseId).getId() + " does not exist");
-        }
-
-        Stock stock = stockOption.get();
-        
-        Warehouse warehouse = warehouseService.findWarehouseById(warehouseId);
-        int quantity = stock.getQuantity();
-        int currentCapacity = warehouse.getCapacity();
-        int newCapacity = currentCapacity + quantity;
-
-        warehouseService.updateCapacity(warehouse, newCapacity);
-
-        repository.delete(stock);
-
-        return 1;
-    }
-
-    @Transactional
     public int updateStock(int itemId, int warehouseId, int quantity) {
 
         Optional<Stock> stockOption = repository.findById(findStockByIds(itemId, warehouseId).getId());
@@ -151,6 +130,27 @@ public class StockService {
         else if (quantity == 0) {
             throw new DataIntegrityViolationException("Quantity cannot be 0");
         }
+        return 1;
+    }
+
+    @Transactional
+    public int deleteStock(int itemId, int warehouseId) {
+        Optional<Stock> stockOption = repository.findById(findStockByIds(itemId, warehouseId).getId());
+        if (!stockOption.isPresent()) {
+            throw new EntityNotFoundException("Stock with id: " + findStockByIds(itemId, warehouseId).getId() + " does not exist");
+        }
+
+        Stock stock = stockOption.get();
+        
+        Warehouse warehouse = warehouseService.findWarehouseById(warehouseId);
+        int quantity = stock.getQuantity();
+        int currentCapacity = warehouse.getCapacity();
+        int newCapacity = currentCapacity + quantity;
+
+        warehouseService.updateCapacity(warehouse, newCapacity);
+
+        repository.delete(stock);
+
         return 1;
     }
 }
