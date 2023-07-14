@@ -3,7 +3,9 @@ package com.skillstorm.project1.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.skillstorm.project1.models.Item;
-
 import com.skillstorm.project1.repositories.ItemRepository;
 
 @Service
@@ -22,6 +23,9 @@ public class ItemService {
 
     @Autowired
     WarehouseService warehouseService;
+
+    @PersistenceContext
+    private EntityManager EntityManager;
 
     public List<Item> findAllItems() {
         try {
@@ -68,5 +72,11 @@ public class ItemService {
 
     public void deleteItem(Item item) {
         repository.delete(item);
+    }
+
+    @Transactional
+    public void updateUnits(Item item, int newUnits) {
+        item.setUnits(newUnits);
+        EntityManager.merge(item);
     }
 }

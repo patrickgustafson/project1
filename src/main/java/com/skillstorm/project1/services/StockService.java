@@ -74,13 +74,20 @@ public class StockService {
         Item item = itemService.findItemById(itemId);
 
         int currentCapacity = warehouse.getCapacity();
+        int currentUnits = item.getUnits();
         int newCapacity = currentCapacity - quantity;
+        int newUnits = currentUnits - quantity;
 
         if (newCapacity < 0) {
             throw new DataIntegrityViolationException("Stock quantity exceeds warehouse capacity");
         }
 
+        if (newUnits < 0) {
+            throw new DataIntegrityViolationException("Stock quantity exceeds number of units");
+        }
+
         warehouseService.updateCapacity(warehouse, newCapacity);
+        itemService.updateUnits(item, newUnits);
 
         Stock stock = new Stock();
         StockId stockId = new StockId();
@@ -147,7 +154,12 @@ public class StockService {
         int currentCapacity = warehouse.getCapacity();
         int newCapacity = currentCapacity + quantity;
 
+        Item item = itemService.findItemById(itemId);
+        int currentUnits = item.getUnits();
+        int newUnits = currentUnits + quantity;
+
         warehouseService.updateCapacity(warehouse, newCapacity);
+        itemService.updateUnits(item, newUnits);
 
         repository.delete(stock);
 
