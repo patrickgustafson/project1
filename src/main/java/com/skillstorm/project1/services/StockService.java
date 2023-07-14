@@ -124,13 +124,20 @@ public class StockService {
             int currentQuantity = existingStock.getQuantity();
             int quantityDifference = quantity - currentQuantity;
             int currentCapacity = existingStock.getWarehouse().getCapacity();
+            int currentUnits = existingStock.getItem().getUnits();
             int newCapacity = currentCapacity - quantityDifference;
+            int newUnits = currentUnits - quantityDifference;
 
             if (newCapacity < 0) {
                 throw new DataIntegrityViolationException("Stock quantity exceeds warehouse capacity");
             }
 
+            if (newUnits < 0) {
+                throw new DataIntegrityViolationException("Stock quantity exceeds item units");
+            }
+
             warehouseService.updateCapacity(existingStock.getWarehouse(), newCapacity);
+            itemService.updateUnits(existingStock.getItem(), newUnits);
 
             existingStock.setQuantity(quantity);
         } 
