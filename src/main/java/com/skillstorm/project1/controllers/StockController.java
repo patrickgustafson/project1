@@ -5,12 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstorm.project1.models.Stock;
 import com.skillstorm.project1.repositories.StockRepository;
@@ -18,7 +21,9 @@ import com.skillstorm.project1.services.StockService;
 import com.skillstorm.project1.services.WarehouseService;
 import com.skillstorm.project1.services.ItemService;
 
-
+@RestController
+@RequestMapping("/stock")
+@CrossOrigin("*")
 public class StockController {
     
     @Autowired
@@ -79,7 +84,7 @@ public class StockController {
         return new ResponseEntity<Integer>(deletedStock, HttpStatus.OK);
     }
 
-    @PutMapping("/{stockId}/{warehouseId}/{quantity}")
+    @PutMapping("/{itemId}/{warehouseId}/{quantity}")
     public ResponseEntity<Integer> updateStock(@PathVariable int itemId,
             @PathVariable int warehouseId,
             @PathVariable(required = false) int quantity) {
