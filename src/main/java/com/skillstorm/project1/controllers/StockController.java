@@ -38,6 +38,7 @@ public class StockController {
     @Autowired
     WarehouseService warehouseService;
 
+    // Gets all Stock
     @GetMapping
     public ResponseEntity<List<Stock>> getAllStock() {
         
@@ -45,6 +46,7 @@ public class StockController {
         return new ResponseEntity<>(stock, HttpStatus.OK);
     }
 
+    // Gets Stock by Item and Warehouse Ids
     @GetMapping("/{itemId}/{warehouseId}")
     public ResponseEntity<Stock> findStockByIds(@PathVariable int itemId, @PathVariable int warehouseId) {
 
@@ -52,6 +54,7 @@ public class StockController {
         return new ResponseEntity<Stock>(stock, HttpStatus.OK);
     }
 
+    // Gets Stock by Warehouse Id Only
     @GetMapping("/warehouse/{warehouseId}")
     public ResponseEntity<List<Stock>> getStockByWarehouse(@PathVariable int warehouseId) {
 
@@ -59,6 +62,7 @@ public class StockController {
         return new ResponseEntity<>(stocks, HttpStatus.OK);
     }
 
+    // Gets Stock by Item Id Only
     @GetMapping("/item/{itemId}")
     public ResponseEntity<List<Stock>> getStockByItem(@PathVariable int itemId) {
 
@@ -66,6 +70,7 @@ public class StockController {
         return new ResponseEntity<>(stocks, HttpStatus.OK);
     }
 
+    // Creates new Stock
     @PostMapping
     public ResponseEntity<Stock> createStock(
             @RequestParam("itemId") int itemId,
@@ -76,6 +81,7 @@ public class StockController {
         return new ResponseEntity<Stock>(stock, HttpStatus.CREATED);
     }
 
+    // Deletes Stock by Item and Warehouse Ids
     @DeleteMapping("/{itemId}/{warehouseId}")
     public ResponseEntity<Integer> deleteStock(@PathVariable int itemId,
             @PathVariable int warehouseId) {
@@ -84,6 +90,7 @@ public class StockController {
         return new ResponseEntity<Integer>(deletedStock, HttpStatus.OK);
     }
 
+    // Updates Stock
     @PutMapping("/{itemId}/{warehouseId}/{quantity}")
     public ResponseEntity<Integer> updateStock(@PathVariable int itemId,
             @PathVariable int warehouseId,

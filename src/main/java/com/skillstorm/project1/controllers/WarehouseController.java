@@ -28,24 +28,28 @@ public class WarehouseController {
     @Autowired
     WarehouseService service;
 
+    // Gets all Warehouses
     @GetMapping
     public ResponseEntity<List<Warehouse>> findAllWarehouses() {
         List<Warehouse> warehouses = service.findAllWarehouses();
         return new ResponseEntity<List<Warehouse>>(warehouses, HttpStatus.OK);
     }
 
+    // Gets a Warehouse by id
     @GetMapping("/warehouse/{id}")
     public ResponseEntity<Warehouse> findWarehouseById(int id) {
         Warehouse warehouse = service.findWarehouseById(id);
         return new ResponseEntity<Warehouse>(warehouse, HttpStatus.OK);
     }
 
+    // Creates new Warehouse
     @PostMapping("/warehouse")
     public ResponseEntity<Warehouse> createWarehouse(@Valid @RequestBody Warehouse warehouse) {
         Warehouse createdWarehouse = service.saveWarehouse(warehouse);
         return new ResponseEntity<Warehouse>(createdWarehouse, HttpStatus.CREATED);
     }
 
+    // Updates Warehouse
     @PutMapping("/warehouse/{id}")
     public ResponseEntity<Integer> updateWarehouse(@RequestBody Warehouse warehouse,
                                                    @RequestParam(required = false) String newLocation,
@@ -54,6 +58,7 @@ public class WarehouseController {
         return new ResponseEntity<Integer>(updatedWarehouse, HttpStatus.OK);
     }
 
+    // Deletes Warehouse by Id
     @DeleteMapping("/warehouse/{id}")
     public ResponseEntity<Warehouse> deleteWarehouse(@RequestBody Warehouse warehouse) {
         service.deleteWarehouse(warehouse);

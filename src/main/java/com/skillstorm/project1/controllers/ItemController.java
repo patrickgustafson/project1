@@ -29,24 +29,28 @@ public class ItemController {
     @Autowired
     ItemService service;
 
+    // Gets all Items
     @GetMapping
     public ResponseEntity<List<Item>> findAllItems() {
         List<Item> items = service.findAllItems();
         return new ResponseEntity<List<Item>>(items, HttpStatus.OK);
     }
 
+    // Gets Item by Id
     @GetMapping("/item/{id}")
     public ResponseEntity<Item> findItemById(@PathVariable int id) {
         Item item = service.findItemById(id);
         return new ResponseEntity<Item>(item, HttpStatus.OK);
     }
 
+    // Creates new Item
     @PostMapping("/item")
     public ResponseEntity<Item> createItem(@Valid @RequestBody Item item) {
         Item createdItem = service.saveItem(item);
         return new ResponseEntity<Item>(createdItem, HttpStatus.CREATED);
     }
 
+    // Updates Item using Id
     @PutMapping("/item/{id}")
     public ResponseEntity<Integer> updateItem(@RequestBody Item item,
                                               @RequestParam(required = false) String newName,
@@ -55,6 +59,7 @@ public class ItemController {
         return new ResponseEntity<Integer>(updatedItem, HttpStatus.OK);
     }
 
+    // Deletes Item by Id
     @DeleteMapping("/item/{id}")
     public ResponseEntity<Item> deleteItem(@RequestBody Item item) {
         service.deleteItem(item);
